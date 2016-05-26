@@ -7,9 +7,9 @@ class RomanValue
     ans = 0
     if valid_number?(test)
       test.split("").each_with_index do |val,index|
-        if test[index+1] && check_precedence(val.to_sym,test[index + 1].to_sym)
+        next if test[index - 1] && check_precedence(test[index - 1],val)
+        if test[index + 1] && check_precedence(val,test[index + 1])
           ans += ROMAN[test[index + 1].to_sym] - ROMAN[val.to_sym]
-          next
         else
           ans += ROMAN[val.to_sym]
         end
@@ -27,6 +27,12 @@ class RomanValue
         break
       end
     end
+    ["D","L","V"].each do |num|
+      if text.include?(repeat(num,2))
+        puts "The number is invalid."
+        break
+      end
+    end
   end
 
   def repeat(text, n=4)
@@ -34,7 +40,7 @@ class RomanValue
   end
 
   def check_precedence(a,b)
-    ROMAN[a] < ROMAN[b]
+    ROMAN[a.to_sym] < ROMAN[b.to_sym]
   end
 end
 
