@@ -1,17 +1,17 @@
 class RomanValue
   attr_accessor :test
 
+  ROMAN = {I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000}
+
   def find_value
-    roman = [I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000]
-    roman = roman.first
     ans = 0
     if valid_number?(test)
       test.split("").each_with_index do |val,index|
-        if test[index + 1] && check_precedence(val,test[index + 1])
-          ans += roman[test[index + 1].to_sym] - roman[val.to_sym]
+        if test[index+1] && check_precedence(val.to_sym,test[index + 1].to_sym)
+          ans += ROMAN[test[index + 1].to_sym] - ROMAN[val.to_sym]
           next
         else
-          ans += roman[val.to_sym]
+          ans += ROMAN[val.to_sym]
         end
       end
       puts "#{ans}"
@@ -34,8 +34,7 @@ class RomanValue
   end
 
   def check_precedence(a,b)
-    precede = ["I","V","X","L","C","D","M"]
-    precede.index(a) > precede.index(b)
+    ROMAN[a] < ROMAN[b]
   end
 end
 
