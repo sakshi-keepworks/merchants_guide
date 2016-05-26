@@ -5,9 +5,9 @@ class RomanValue
 
   def find_value
     ans = 0
-    if test.valid_number?
+    if valid_number?(test)
       test.split("").each_with_index do |val,index|
-        if test[index + 1] && check_precedence(precede.index(val),precede.index(test[index + 1])
+        if test[index + 1] && check_precedence(val,test[index + 1])
           ans += roman.first[test[index + 1].to_sym] - roman.first[val.to_sym]
           next
         else
@@ -20,9 +20,9 @@ class RomanValue
 
   private
 
-  def valid_number?
+  def valid_number?(text)
     ["I","X","C","M"].each do |num|
-      return false if test.include?(repeat(num))
+      text.include?(repeat(num))
     end
   end
 
@@ -34,3 +34,7 @@ class RomanValue
     precede.index(a) > precede.index(b)
   end
 end
+
+rv = RomanValue.new
+rv.test = gets
+rv.find_value
