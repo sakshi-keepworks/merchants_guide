@@ -1,9 +1,10 @@
+require 'byebug'
 class RomanValue
   attr_accessor :test
 
   ROMAN = {I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000}
 
-  def find_value
+  def calculate_value
     ans = 0
     if valid_number?(test)
       test.split("").each_with_index do |val,index|
@@ -21,22 +22,13 @@ class RomanValue
   private
 
   def valid_number?(text)
-    ["I","X","C","M"].each do |num|
-      if text.include?(repeat(num))
-        puts "The number is invalid."
-        break
-      end
-    end
-    ["D","L","V"].each do |num|
-      if text.include?(repeat(num,2))
-        puts "The number is invalid."
-        break
-      end
-    end
+    return false if check_number_exist?(["I","X","C","M"],4,text)
+    return false if check_number_exist?(["D","L","V"],2,text)
+    true
   end
 
-  def repeat(text, n=4)
-    text * n
+  def check_number_exist?(arr = [],num, text)
+    arr.detect {|number| text.include?(number * num)}
   end
 
   def check_precedence(a,b)
@@ -46,4 +38,4 @@ end
 
 rv = RomanValue.new
 rv.test = gets.chomp
-rv.find_value
+rv.calculate_value
