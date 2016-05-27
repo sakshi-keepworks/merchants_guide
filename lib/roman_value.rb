@@ -6,7 +6,7 @@ class RomanValue
 
   def calculate_value
     ans = 0
-    if valid_number?(test)
+    if valid_number?
       test.split("").each_with_index do |val,index|
         next if test[index - 1] && check_precedence(test[index - 1],val)
         if test[index + 1] && check_precedence(val,test[index + 1])
@@ -16,19 +16,25 @@ class RomanValue
         end
       end
       puts "#{ans}"
+    else
+      puts "The number is invalid."
     end
   end
 
   private
 
-  def valid_number?(text)
-    return false if check_number_exist?(["I","X","C","M"],4,text)
-    return false if check_number_exist?(["D","L","V"],2,text)
+  def valid_number?
+    return false if check_number_exist?(["I","X","C","M"],4)
+    return false if check_repetition?(["D","L","V"])
     true
   end
 
-  def check_number_exist?(arr = [],num, text)
-    arr.detect {|number| text.include?(number * num)}
+  def check_number_exist?(arr, num)
+    arr.detect {|number| test.include?(number * num)}
+  end
+
+  def check_repetition?(arr)
+    arr.detect {|num| test.each_char.find { test.count(num) > 1 }}
   end
 
   def check_precedence(a,b)
