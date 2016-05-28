@@ -74,11 +74,3 @@ class RomanValue
     @input_text ||= test_input.split("")
   end
 end
-
-File.open("input.txt", "r") do |f|
-  f.each_line do |line|
-    rv = RomanValue.new
-    rv.test_input = line.chomp.upcase
-    rv.convert
-  end
-end
