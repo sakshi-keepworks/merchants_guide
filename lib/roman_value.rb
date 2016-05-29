@@ -33,7 +33,7 @@ class RomanValue
         result += ROMAN[val.to_sym]
       end
     end
-    return "The value of #{test_input} is #{result}"
+    return "The value of #{test_input} is #{result}."
   end
 
   def number_invalid?
